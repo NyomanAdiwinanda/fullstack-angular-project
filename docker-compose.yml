@@ -1,0 +1,63 @@
+services:
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: image-web
+    restart: unless-stopped
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
+    networks:
+      - image-api-network
+
+  api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: image-api-server
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      MONGODB_URI: ${MONGODB_URI}
+      AWS_REGION: ${AWS_REGION}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      S3_BUCKET_NAME: ${S3_BUCKET_NAME}
+      MAX_FILE_SIZE: ${MAX_FILE_SIZE:-10485760}
+      ALLOWED_FILE_TYPES: ${ALLOWED_FILE_TYPES:-image/jpeg,image/png,image/gif,image/webp}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:4200}
+    depends_on:
+      - mongodb
+    networks:
+      - image-api-network
+    env_file:
+      - ./.env
+
+  mongodb:
+    image: mongo:7.0
+    container_name: image-api-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: imageapi
+    volumes:
+      - mongodb_data:/data/db
+      - ./server/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - image-api-network
+
+networks:
+  image-api-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+    driver: local

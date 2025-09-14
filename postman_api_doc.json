@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "e7b6c2c2-5e35-4fb5-9f6b-collection-placeholder",
+		"name": "Image API Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"description": "Postman collection for Image API (health, upload, list, get, patch, delete)."
+	},
+	"variable": [{ "key": "base_url", "value": "http://localhost:3000" }],
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": { "raw": "{{base_url}}/health", "host": ["{{base_url}}"], "path": ["health"] }
+			}
+		},
+		{
+			"name": "Upload Image",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "<replace-with-file-path>",
+							"description": "Select an image file"
+						},
+						{ "key": "title", "type": "text", "value": "My Custom Image Title", "description": "Optional title" },
+						{ "key": "description", "type": "text", "value": "My test image", "description": "Optional description" },
+						{ "key": "tags", "type": "text", "value": "test,postman,upload", "description": "Comma separated tags" }
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/images/upload",
+					"host": ["{{base_url}}"],
+					"path": ["api", "images", "upload"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Images",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/images?page=1&limit=10",
+					"host": ["{{base_url}}"],
+					"path": ["api", "images"],
+					"query": [
+						{ "key": "page", "value": "1" },
+						{ "key": "limit", "value": "10" }
+					]
+				}
+			}
+		},
+		{
+			"name": "Get All Images (Filtered by Tag)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/images?tags=test",
+					"host": ["{{base_url}}"],
+					"path": ["api", "images"],
+					"query": [{ "key": "tags", "value": "test" }]
+				}
+			}
+		},
+		{
+			"name": "Get Single Image",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/images/:id",
+					"host": ["{{base_url}}"],
+					"path": ["api", "images", ":id"],
+					"variable": [{ "key": "id", "value": "<image-id>" }]
+				}
+			}
+		},
+		{
+			"name": "Update Image Metadata",
+			"request": {
+				"method": "PATCH",
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Updated Image Title\",\n  \"description\": \"Updated description\",\n  \"tags\": [\"updated\", \"postman\", \"test\"]\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/images/:id",
+					"host": ["{{base_url}}"],
+					"path": ["api", "images", ":id"],
+					"variable": [{ "key": "id", "value": "<image-id>" }]
+				}
+			}
+		},
+		{
+			"name": "Delete Image",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/images/:id",
+					"host": ["{{base_url}}"],
+					"path": ["api", "images", ":id"],
+					"variable": [{ "key": "id", "value": "<image-id>" }]
+				}
+			}
+		}
+	]
+}
