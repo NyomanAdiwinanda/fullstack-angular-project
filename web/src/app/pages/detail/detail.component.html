@@ -1,0 +1,53 @@
+<section class="section">
+  <div class="top-bar">
+    <a routerLink="/" class="btn btn-ghost">← Back</a>
+    <div class="top-bar-actions" *ngIf="!loading() && !error() && item() as topImg">
+      <a [routerLink]="['/images', topImg.id, 'edit']" class="btn btn-primary">Edit</a>
+      <button class="btn btn-danger" (click)="openDelete()" [disabled]="busy()">Delete</button>
+    </div>
+  </div>
+  <div *ngIf="loading()" class="muted">Loading…</div>
+  <div *ngIf="error()" class="alert">{{ error() }}</div>
+
+  <div *ngIf="item() as img" class="detail">
+    <div class="detail-media">
+      <img [src]="img.url || img.s3Url" [alt]="img.title" />
+    </div>
+    <div class="detail-body card">
+      <div class="card-body">
+        <h1 class="h1">{{ img.title }}</h1>
+        <p class="muted">{{ img.mimeType }} • {{ formatSize(img.size) }}</p>
+        <p class="card-desc" *ngIf="img.metadata?.description">{{ img.metadata?.description }}</p>
+        <div class="tags" *ngIf="img.metadata?.tags?.length">
+          <span class="badge" *ngFor="let t of img.metadata!.tags!">{{ t }}</span>
+        </div>
+        <dl class="kv">
+          <dt>Original name</dt>
+          <dd>{{ img.originalName }}</dd>
+          <dt>S3 URL</dt>
+          <dd>
+            <a [href]="img.s3Url" target="_blank">{{ img.s3Url }}</a>
+          </dd>
+          <dt>Uploaded</dt>
+          <dd>{{ img.uploadDate | date : 'EEEE d MMMM y' }}</dd>
+          <dt>ID</dt>
+          <dd>
+            <code>{{ img.id }}</code>
+          </dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+  <div class="modal-overlay" *ngIf="showDelete()">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="del-title">
+      <h2 id="del-title" class="h1">Delete image</h2>
+      <p class="muted">Are you sure you want to delete this image? This action can't be undone.</p>
+      <div class="modal-actions">
+        <button class="btn btn-danger" (click)="confirmDelete(item()!.id)" [disabled]="busy()">
+          Delete
+        </button>
+        <button class="btn btn-ghost" (click)="closeDelete()" [disabled]="busy()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</section>

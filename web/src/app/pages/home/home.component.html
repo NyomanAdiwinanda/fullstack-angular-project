@@ -1,0 +1,37 @@
+<section class="section">
+  <div class="section-header">
+    <h1 class="h1">Latest Images</h1>
+    <a routerLink="/upload" class="btn btn-primary">Upload</a>
+  </div>
+
+  <div *ngIf="loading()" class="muted">Loading images…</div>
+  <div *ngIf="error()" class="alert">{{ error() }}</div>
+
+  <div *ngIf="!loading() && images().length === 0" class="empty">
+    No images yet. Try uploading one.
+  </div>
+
+  <div class="grid">
+    <article class="card" *ngFor="let img of images(); trackBy: trackId">
+      <a [routerLink]="['/images', img.id]" class="card-media">
+        <img [src]="img.url || img.s3Url" [alt]="img.title" />
+      </a>
+      <div class="card-body">
+        <h3 class="card-title">{{ img.title }}</h3>
+        <p class="card-desc clamp-2" *ngIf="img.metadata?.description">
+          {{ img.metadata?.description }}
+        </p>
+        <div class="tags" *ngIf="(img.metadata?.tags?.length || 0) > 0">
+          <ng-container *ngFor="let t of firstTags(img); let i = index">
+            <span class="badge">{{ t }}</span>
+          </ng-container>
+          <span class="badge" *ngIf="extraTagCount(img) > 0">+{{ extraTagCount(img) }}</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a [routerLink]="['/images', img.id]" class="btn btn-ghost">View</a>
+        <a [routerLink]="['/images', img.id, 'edit']" class="btn btn-ghost">Edit</a>
+      </div>
+    </article>
+  </div>
+</section>
