@@ -1,6 +1,6 @@
 # API DOC
 
-Your API server is running at: **http://localhost:3000**
+Your API server is running at: **https://fullstack-angular-project.onrender.com**
 
 ## 🧪 **Test Endpoints**
 
@@ -12,7 +12,7 @@ Test if your server is running:
 
 ```
 Method: GET
-URL: http://localhost:3000/health
+URL: https://fullstack-angular-project.onrender.com/health
 ```
 
 **Expected Response:**
@@ -36,7 +36,7 @@ Upload an image file:
 
 ```
 Method: POST
-URL: http://localhost:3000/api/images/upload
+URL: https://fullstack-angular-project.onrender.com/api/images/upload
 ```
 
 **Headers:**
@@ -84,7 +84,7 @@ Retrieve all uploaded images:
 
 ```
 Method: GET
-URL: http://localhost:3000/api/images
+URL: https://fullstack-angular-project.onrender.com/api/images
 ```
 
 **Optional Query Parameters:**
@@ -97,7 +97,7 @@ URL: http://localhost:3000/api/images
 **Example with filters:**
 
 ```
-http://localhost:3000/api/images?page=1&limit=5&tags=test
+https://fullstack-angular-project.onrender.com/api/images?page=1&limit=5&tags=test
 ```
 
 **Expected Response:**
@@ -135,7 +135,7 @@ Get details of a specific image:
 
 ```
 Method: GET
-URL: http://localhost:3000/api/images/{IMAGE_ID}
+URL: https://fullstack-angular-project.onrender.com/api/images/{IMAGE_ID}
 ```
 
 Replace `{IMAGE_ID}` with the actual ID from upload response.
@@ -150,7 +150,7 @@ Update image description and tags:
 
 ```
 Method: PATCH
-URL: http://localhost:3000/api/images/{IMAGE_ID}
+URL: https://fullstack-angular-project.onrender.com/api/images/{IMAGE_ID}
 ```
 
 **Headers:**
@@ -177,7 +177,7 @@ Delete an image:
 
 ```
 Method: DELETE
-URL: http://localhost:3000/api/images/{IMAGE_ID}
+URL: https://fullstack-angular-project.onrender.com/api/images/{IMAGE_ID}
 ```
 
 **Expected Response:**

@@ -19,7 +19,7 @@ Brief full‑stack example: Angular frontend for uploading, browsing, viewing, e
 
 ## Quick Start
 
-Use docker to run. Run command bellow to run both the server and web locally:
+Use docker to run. Run command bellow:
 
 ```bash
 docker compose up -d
@@ -28,7 +28,7 @@ docker compose up -d
 Then:
 
 - Web UI: http://localhost:4200
-- API: http://localhost:3000
+- API: https://fullstack-angular-project.onrender.com
 
 To stop:
 

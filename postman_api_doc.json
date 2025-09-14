@@ -5,7 +5,7 @@
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"description": "Postman collection for Image API (health, upload, list, get, patch, delete)."
 	},
-	"variable": [{ "key": "base_url", "value": "http://localhost:3000" }],
+	"variable": [{ "key": "base_url", "value": "https://fullstack-angular-project.onrender.com" }],
 	"item": [
 		{
 			"name": "Health Check",
